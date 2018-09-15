@@ -1,0 +1,9 @@
+.wrapper {
+    text-align: center;
+    background-color: aqua;
+    border-bottom-style: solid;
+    border-bottom-color: blueviolet;
+}
+h1 {
+    text-decoration-line: underline    
+}
