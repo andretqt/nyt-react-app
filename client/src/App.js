@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 import TitleSection from "./components/TitleSection/TitleSection"
 import SearchBox from "./components/SearchBox/SearchBox";
-
+import Result from "./components/Result/Result"
+const searchResults = [
+  {title: "article number one"},
+  {title: "article number two"}
+];
 class App extends Component {
   grabValues = (e) => {
     e.preventDefault();
@@ -14,9 +18,14 @@ class App extends Component {
     console.log(searchObject);
     this.setState({ searchObject: searchObject })
   };
+  saveArticle = (e) => {
+    e.preventDefault();
+    console.log("you just saved this article");
+  };
 
   state = {
-    searchObject: {}
+    searchObject: {},
+    searchResults: searchResults
   }
 
   render() {
@@ -28,8 +37,13 @@ class App extends Component {
         {/* Results */}
         {/* Saved Articles */}
         <SearchBox onClickFunction={this.grabValues} />
-        <div className="searchResults">
+        <div className="ResultsBox">
           <h2>Results</h2>
+          <div className="searchResults">
+            {this.state.searchResults.map((result, index) => (
+              <Result key={index} title={result.title} onClickFunction={this.saveArticle}/>
+            ) )}
+          </div>
         </div>
 
         <div>
