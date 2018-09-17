@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import axios from "axios";
 import './App.css';
 import TitleSection from "./components/TitleSection/TitleSection"
 import SearchBox from "./components/SearchBox/SearchBox";
 import Result from "./components/Result/Result"
+// const apiKey = "834af163c5ea449a9f76a402925a5872";
 const searchResults = [
   {title: "article number one"},
   {title: "article number two"}
@@ -17,6 +19,17 @@ class App extends Component {
     };
     console.log(searchObject);
     this.setState({ searchObject: searchObject })
+    //api call here
+    console.log("just did the api call");
+    var baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+    baseURL += "q=" + document.getElementById("topic").value.trim();
+    baseURL += "&api-key=834af163c5ea449a9f76a402925a5872";
+    baseURL += "&begin-date=" + document.getElementById("start").value.trim() + "0101";
+    baseURL += "&end-date=" + document.getElementById("end").value.trim() + "1231"
+    axios.get(baseURL)
+    .then(json => console.log(json.data.response.docs))
+   
+
   };
   saveArticle = (e) => {
     e.preventDefault();
@@ -27,7 +40,7 @@ class App extends Component {
     searchObject: {},
     searchResults: searchResults
   }
-
+  
   render() {
     return (
       <div>
