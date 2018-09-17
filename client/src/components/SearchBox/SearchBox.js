@@ -19,9 +19,11 @@ const SearchBox = (props) => {
                     <label>Topic</label> 
                     <br/>
                     <input type="text" id="topic"></input>
+                    <br/>
                     <label>Start Year</label>
                     <br/>
                     <input type="text" id="start"></input>
+                    <br/>
                     <label>End Year</label>
                     <br/>
                     <input type="text" id="end"></input>
