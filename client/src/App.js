@@ -24,10 +24,24 @@ class App extends Component {
     var baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
     baseURL += "q=" + document.getElementById("topic").value.trim();
     baseURL += "&api-key=834af163c5ea449a9f76a402925a5872";
-    baseURL += "&begin-date=" + document.getElementById("start").value.trim() + "0101";
-    baseURL += "&end-date=" + document.getElementById("end").value.trim() + "1231"
+    baseURL += "&begin_date=" + document.getElementById("start").value.trim() + "0101";
+    baseURL += "&end_date=" + document.getElementById("end").value.trim() + "1231";
+    var resultsArray = [];
+    console.log(baseURL);
     axios.get(baseURL)
-    .then(json => console.log(json.data.response.docs))
+    .then(json =>
+      json.data.response.docs.map(
+        doc => resultsArray.push(
+          {
+            title: doc.headline.main,
+            date: doc.pub_date,
+            url: doc.web_url
+          }
+        )
+      )
+    );
+    console.log(resultsArray);
+    //gotta create a title, date, url object
    
 
   };
