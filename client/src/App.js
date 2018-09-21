@@ -3,12 +3,9 @@ import axios from "axios";
 import './App.css';
 import TitleSection from "./components/TitleSection/TitleSection"
 import SearchBox from "./components/SearchBox/SearchBox";
-import Result from "./components/Result/Result"
-// const apiKey = "834af163c5ea449a9f76a402925a5872";
-const searchResults = [
-  {title: "article number one"},
-  {title: "article number two"}
-];
+// import ResultsBox from "./components/ResultsBox/ResultsBox"
+import Result from "./components/Result/Result";
+
 class App extends Component {
   grabValues = (e) => {
     e.preventDefault();
@@ -18,7 +15,6 @@ class App extends Component {
       endYear: document.getElementById("end").value.trim()
     };
     console.log(searchObject);
-    this.setState({ searchObject: searchObject })
     //api call here
     console.log("just did the api call");
     var baseURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
@@ -26,10 +22,10 @@ class App extends Component {
     baseURL += "&api-key=834af163c5ea449a9f76a402925a5872";
     baseURL += "&begin_date=" + document.getElementById("start").value.trim() + "0101";
     baseURL += "&end_date=" + document.getElementById("end").value.trim() + "1231";
-    var resultsArray = [];
     console.log(baseURL);
+    var resultsArray = []
     axios.get(baseURL)
-    .then(json =>
+    .then(json => {
       json.data.response.docs.map(
         doc => resultsArray.push(
           {
@@ -39,11 +35,8 @@ class App extends Component {
           }
         )
       )
-    );
-    console.log(resultsArray);
-    //gotta create a title, date, url object
-   
-
+      this.setState({searchResults: resultsArray})
+    });
   };
   saveArticle = (e) => {
     e.preventDefault();
@@ -52,7 +45,7 @@ class App extends Component {
 
   state = {
     searchObject: {},
-    searchResults: searchResults
+    searchResults: []
   }
   
   render() {
@@ -65,12 +58,13 @@ class App extends Component {
         {/* Saved Articles */}
         <SearchBox onClickFunction={this.grabValues} />
         <div className="ResultsBox">
-          <h2>Results</h2>
-          <div className="searchResults">
-            {this.state.searchResults.map((result, index) => (
-              <Result key={index} title={result.title} onClickFunction={this.saveArticle}/>
-            ) )}
-          </div>
+            <h2>Results</h2>
+            <div className="searchResults">
+              {this.state.searchResults.map(result =>(
+                <Result  title={result.title} onClickFunction={this.saveArticle} />
+              ) )}
+                
+            </div>
         </div>
 
         <div>
